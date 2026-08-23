@@ -1,0 +1,48 @@
+#include "InputManager.h"
+#include "TamaState.h"
+#include "DisplayManager.h"
+#include "CharacterManager.h"
+#include "MenuActions.h"
+
+InputManager buttonConfirm(1);
+InputManager buttonNext(2);
+InputManager buttonC(3);
+
+TamaState TamaState;
+DisplayManager Display;
+CharacterManager Character;
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Setup complete");
+
+  Display.begin();
+  Character.begin();
+
+  buttonConfirm.init();
+  buttonNext.init();
+  buttonC.init();
+}
+
+void loop() {
+  TamaState.update();
+  Character.update();
+
+  if (buttonC.readButton()) {
+    if (menuStack.isOpen()) {
+      menuStack.closeAll();
+    } else {
+      menuStack.push(mainMenu);
+    }
+  }
+
+  if (menuStack.isOpen()) {
+    Display.checkMenu(TamaState, menuStack);
+
+    if (buttonNext.readButton())    menuStack.current()->next();
+    if (buttonConfirm.readButton()) menuStack.current()->select();
+  } else {
+    Display.update(TamaState);
+    Display.checkMenu(TamaState, menuStack);
+  }
+}
