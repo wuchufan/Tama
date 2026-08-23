@@ -2,6 +2,7 @@
 #include "TamaState.h"
 #include "display/DisplayManager.h"
 #include "CharacterManager.h"
+#include "TamaEventsManager.h"
 #include "menu/MenuActions.h"
 
 InputManager buttonConfirm(1);
@@ -11,6 +12,7 @@ InputManager buttonC(3);
 TamaState Tama;
 DisplayManager Display;
 CharacterManager Character;
+TamaEventsManager Events(Tama, Character);
 
 void setup() {
   Serial.begin(115200);
@@ -27,6 +29,7 @@ void setup() {
 void loop() {
   Tama.update();
   Character.update();
+  Events.update();
 
   if (buttonC.readButton()) {
     if (menuStack.isOpen()) {
