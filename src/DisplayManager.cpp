@@ -55,6 +55,10 @@ void DisplayManager::playAnimation(const uint16_t* const frames[], int frameCoun
   lastFrameTime = millis();
 }
 
+void DisplayManager::playFeedAnimation() {
+  playAnimation(idle_frames, IDLE_FRAME_COUNT, 80, 4);
+}
+
 void DisplayManager::returnToIdle() {
   activeFrames = idle_frames;
   activeFrameCount = IDLE_FRAME_COUNT;

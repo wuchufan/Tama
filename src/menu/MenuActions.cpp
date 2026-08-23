@@ -2,7 +2,6 @@
 #include "../TamaState.h"
 #include "../CharacterManager.h"
 #include "../DisplayManager.h"
-#include "../Sprites.h"
 #include <Arduino.h>
 
 extern TamaState Tama;             // defined in main.cpp
@@ -38,7 +37,7 @@ void onMainMenuAction(int id) {
   switch (id) {
     case 0:
       Tama.feed();
-      Display.playAnimation(idle_frames, IDLE_FRAME_COUNT, 80, 4);
+      Display.playFeedAnimation();
       menuStack.closeAll();
       break;
     case 1:

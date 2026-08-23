@@ -11,6 +11,7 @@ public:
   void update(const TamaState& tama);
   void checkMenu(const TamaState& tama, MenuStack& menuStack);
   void playAnimation(const uint16_t* const frames[], int frameCount, unsigned long frameDelay, int repeatCount = 1);
+  void playFeedAnimation();
 
 private:
   TFT_eSPI tft;
