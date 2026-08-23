@@ -1,10 +1,13 @@
 #include "MenuActions.h"
 #include "../TamaState.h"
 #include "../CharacterManager.h"
+#include "../DisplayManager.h"
+#include "../Sprites.h"
 #include <Arduino.h>
 
-extern TamaState Tama;        // defined in main.cpp
+extern TamaState Tama;             // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
+extern DisplayManager Display;     // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onDebugMenuAction(int id);
@@ -33,11 +36,26 @@ MenuStack menuStack;
 
 void onMainMenuAction(int id) {
   switch (id) {
-    case 0: Tama.feed();  break;
-    case 1: Tama.clean(); break;
-    case 2: Tama.play();  break;
-    case 3: Tama.sleep(); break;
-    case 4: menuStack.push(debugMenu); break;
+    case 0:
+      Tama.feed();
+      Display.playAnimation(idle_frames, IDLE_FRAME_COUNT, 80, 4);
+      menuStack.closeAll();
+      break;
+    case 1:
+      Tama.clean();
+      menuStack.closeAll();
+      break;
+    case 2:
+      Tama.play();
+      menuStack.closeAll();
+      break;
+    case 3:
+      Tama.sleep();
+      menuStack.closeAll();
+      break;
+    case 4:
+      menuStack.push(debugMenu);
+      break;
   }
 }
 

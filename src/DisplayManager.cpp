@@ -4,7 +4,10 @@
 const unsigned long DisplayManager::FRAME_DELAY = 150; // same cadence as animation.ino
 
 DisplayManager::DisplayManager()
-  : character(&tft), frameIndex(0), lastFrameTime(0),
+  : character(&tft),
+    activeFrames(idle_frames), activeFrameCount(IDLE_FRAME_COUNT), activeFrameDelay(FRAME_DELAY),
+    activeLoops(true), animRepeatsRemaining(0),
+    frameIndex(0), lastFrameTime(0),
     wasMenuOpen(false), lastDrawnScreen(nullptr), lastDrawnSelectedIndex(-1) {
 }
 
@@ -19,12 +22,44 @@ void DisplayManager::begin() {
 }
 
 void DisplayManager::update(const TamaState& tama) {
-  if (millis() - lastFrameTime >= FRAME_DELAY) {
+  if (millis() - lastFrameTime >= activeFrameDelay) {
     lastFrameTime = millis();
-    frameIndex = (frameIndex + 1) % IDLE_FRAME_COUNT;
+
+    if (activeLoops) {
+      frameIndex = (frameIndex + 1) % activeFrameCount;
+    } else {
+      frameIndex++;
+      if (frameIndex >= activeFrameCount) {
+        frameIndex = 0;
+        animRepeatsRemaining--;
+        if (animRepeatsRemaining <= 0) {
+          returnToIdle();
+        }
+      }
+    }
+
     drawCharacter();
   }
-  drawStats(tama);
+  if (activeLoops) {
+    drawStats(tama);
+  }
+}
+
+void DisplayManager::playAnimation(const uint16_t* const frames[], int frameCount, unsigned long frameDelay, int repeatCount) {
+  activeFrames = frames;
+  activeFrameCount = frameCount;
+  activeFrameDelay = frameDelay;
+  activeLoops = false;
+  animRepeatsRemaining = repeatCount;
+  frameIndex = 0;
+  lastFrameTime = millis();
+}
+
+void DisplayManager::returnToIdle() {
+  activeFrames = idle_frames;
+  activeFrameCount = IDLE_FRAME_COUNT;
+  activeFrameDelay = FRAME_DELAY;
+  activeLoops = true;
 }
 
 void DisplayManager::checkMenu(const TamaState& tama, MenuStack& menuStack) {
@@ -33,7 +68,9 @@ void DisplayManager::checkMenu(const TamaState& tama, MenuStack& menuStack) {
       // just closed: wipe the menu screen and force one fresh draw of the home screen
       tft.fillScreen(TFT_BLACK);
       drawCharacter();
-      drawStats(tama);
+      if (activeLoops) {
+        drawStats(tama);
+      }
       wasMenuOpen = false;
       lastDrawnScreen = nullptr;
       lastDrawnSelectedIndex = -1;
@@ -66,7 +103,7 @@ void DisplayManager::drawItemList(MenuScreen& screen) {
 }
 
 void DisplayManager::drawCharacter() {
-  character.pushImage(0, 0, 100, 100, idle_frames[frameIndex]);
+  character.pushImage(0, 0, 100, 100, activeFrames[frameIndex]);
   character.pushSprite(50, 20); // placeholder position, tune to your panel
 }
 
