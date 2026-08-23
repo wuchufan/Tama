@@ -2,7 +2,7 @@
 #include "TamaState.h"
 #include "DisplayManager.h"
 #include "CharacterManager.h"
-#include "MenuActions.h"
+#include "menu/MenuActions.h"
 
 InputManager buttonConfirm(1);
 InputManager buttonNext(2);

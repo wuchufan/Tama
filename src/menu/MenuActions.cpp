@@ -1,10 +1,10 @@
 #include "MenuActions.h"
-#include "TamaState.h"
-#include "CharacterManager.h"
+#include "../TamaState.h"
+#include "../CharacterManager.h"
 #include <Arduino.h>
 
-extern TamaState TamaState;        // defined in ChufanGotchi.ino
-extern CharacterManager Character; // defined in ChufanGotchi.ino
+extern TamaState TamaState;        // defined in main.cpp
+extern CharacterManager Character; // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onDebugMenuAction(int id);

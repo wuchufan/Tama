@@ -1,7 +1,7 @@
 #pragma once
 #include <TFT_eSPI.h>
 #include "TamaState.h"
-#include "MenuStack.h"
+#include "menu/MenuStack.h"
 
 class DisplayManager {
 public:

@@ -13,7 +13,7 @@ void MenuScreen::next() {
 }
 
 void MenuScreen::select() {
-  
+
   if (items[selectedIndex].onSelect) { // Check if there is action
     items[selectedIndex].onSelect(items[selectedIndex].id);
   }
