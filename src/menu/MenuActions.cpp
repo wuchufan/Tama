@@ -1,7 +1,7 @@
 #include "MenuActions.h"
 #include "../TamaState.h"
 #include "../CharacterManager.h"
-#include "../DisplayManager.h"
+#include "../display/DisplayManager.h"
 #include <Arduino.h>
 
 extern TamaState Tama;             // defined in main.cpp

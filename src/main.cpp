@@ -1,6 +1,6 @@
 #include "InputManager.h"
 #include "TamaState.h"
-#include "DisplayManager.h"
+#include "display/DisplayManager.h"
 #include "CharacterManager.h"
 #include "menu/MenuActions.h"
 
