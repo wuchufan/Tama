@@ -8,7 +8,7 @@ InputManager buttonConfirm(1);
 InputManager buttonNext(2);
 InputManager buttonC(3);
 
-TamaState TamaState;
+TamaState Tama;
 DisplayManager Display;
 CharacterManager Character;
 
@@ -25,7 +25,7 @@ void setup() {
 }
 
 void loop() {
-  TamaState.update();
+  Tama.update();
   Character.update();
 
   if (buttonC.readButton()) {
@@ -37,12 +37,12 @@ void loop() {
   }
 
   if (menuStack.isOpen()) {
-    Display.checkMenu(TamaState, menuStack);
+    Display.checkMenu(Tama, menuStack);
 
     if (buttonNext.readButton())    menuStack.current()->next();
     if (buttonConfirm.readButton()) menuStack.current()->select();
   } else {
-    Display.update(TamaState);
-    Display.checkMenu(TamaState, menuStack);
+    Display.update(Tama);
+    Display.checkMenu(Tama, menuStack);
   }
 }

@@ -3,7 +3,7 @@
 #include "../CharacterManager.h"
 #include <Arduino.h>
 
-extern TamaState TamaState;        // defined in main.cpp
+extern TamaState Tama;        // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
 
 static void onMainMenuAction(int id);
@@ -33,10 +33,10 @@ MenuStack menuStack;
 
 void onMainMenuAction(int id) {
   switch (id) {
-    case 0: TamaState.feed();  Serial.println("Tama ate food."); break;
-    case 1: TamaState.clean(); Serial.println("Tama is clean."); break;
-    case 2: TamaState.play();  Serial.println("Tama played.");   break;
-    case 3: TamaState.sleep(); Serial.println("Tama slept.");    break;
+    case 0: Tama.feed();  break;
+    case 1: Tama.clean(); break;
+    case 2: Tama.play();  break;
+    case 3: Tama.sleep(); break;
     case 4: menuStack.push(debugMenu); break;
   }
 }
