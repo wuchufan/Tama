@@ -5,7 +5,12 @@
 extern const uint16_t idle_0[] PROGMEM;
 extern const uint16_t idle_1[] PROGMEM;
 
-extern const uint16_t* const idle_frames[];
-extern const int IDLE_FRAME_COUNT;
+extern const uint16_t smile_0 [] PROGMEM;
+extern const uint16_t smile_1 [] PROGMEM;
 
+extern const uint16_t* const idle_frames[];
+extern const uint16_t* const smile_frames[];
+
+extern const int IDLE_FRAME_COUNT;
+extern const int SMILE_FRAME_COUNT;
 extern const int SPRITE_SIZE[];

@@ -4,7 +4,7 @@
 const unsigned long AnimationDisplay::FRAME_DELAY = 150; // same cadence as animation.ino
 
 const int AnimationDisplay::MOVE_MIN_X = 10;
-const int AnimationDisplay::MOVE_MAX_X = 130;  // keeps the 100px sprite on a ~240px-wide screen
+const int AnimationDisplay::MOVE_MAX_X = min(130, 230-SPRITE_SIZE[0]);  // keeps the 100px sprite on a ~240px-wide screen
 const int AnimationDisplay::MOVE_STEP = 2;
 const int AnimationDisplay::REGION_X = MOVE_MIN_X;
 const int AnimationDisplay::REGION_WIDTH = (MOVE_MAX_X - MOVE_MIN_X) + SPRITE_SIZE[0]; // covers the full walking corridor
@@ -31,7 +31,7 @@ void AnimationDisplay::update() {
     if (activeLoops) {
       frameIndex = (frameIndex + 1) % activeFrameCount;
 
-      setIdleMotion();
+      setIdleMovement();
     } else {
       frameIndex++;
       if (frameIndex >= activeFrameCount) {
@@ -46,7 +46,7 @@ void AnimationDisplay::update() {
     draw();
   }
 }
-void AnimationDisplay::setIdleMotion(){
+void AnimationDisplay::setIdleMovement(){
     posX += moveDirection * MOVE_STEP;
     if (posX <= MOVE_MIN_X || posX >= MOVE_MAX_X) {
       moveDirection = -moveDirection;
@@ -65,7 +65,7 @@ void AnimationDisplay::playAnimation(const uint16_t* const frames[], int frameCo
 }
 
 void AnimationDisplay::playFeedAnimation() {
-  playAnimation(idle_frames, IDLE_FRAME_COUNT, 80, 4);
+  playAnimation(smile_frames, SMILE_FRAME_COUNT, 80, 4);
 }
 
 bool AnimationDisplay::isIdle() const {
