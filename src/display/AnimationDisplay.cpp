@@ -22,10 +22,14 @@ void AnimationDisplay::begin() {
   // computed here, not as static const initializers — SPRITE_SIZE lives in Sprites.cpp,
   // a different translation unit, and C++ doesn't guarantee cross-file static init order.
   // begin() runs from setup(), which is only ever called after all static init completes.
+
   moveMaxX = min(130, 230 - SPRITE_SIZE[0]);   // keeps the 100px sprite on a ~240px-wide screen
   regionWidth = (moveMaxX - MOVE_MIN_X) + SPRITE_SIZE[0]; // covers the full walking corridor
 
   character.setColorDepth(16);     // RGB565
+
+  // Allocates character's off-screen pixel buffer (RAM only, invisible until pushSprite()
+  // sends it to the real screen). Required before any pushImage/fillSprite call on character.
   character.createSprite(regionWidth, 100);
   character.setSwapBytes(true);
 }
@@ -87,6 +91,9 @@ void AnimationDisplay::returnToIdle() {
 
 void AnimationDisplay::draw() {
   background.drawPatchInto(character, REGION_X, 20, regionWidth, 100);
-  character.pushImage(posX - REGION_X, 0, 100, 100, const_cast<uint16_t*>(activeFrames[frameIndex]), TFT_BLACK); // TFT_BLACK pixels in the frame art are skipped (transparent), letting the background show through around the character's shape
+  
+  // TFT_BLACK pixels in the frame art are skipped (transparent), letting the background show through around the character's shape
+  // TODO: fix it, right now it is not working
+  character.pushImage(posX - REGION_X, 0, 100, 100, const_cast<uint16_t*>(activeFrames[frameIndex]), TFT_BLACK); 
   character.pushSprite(REGION_X, 20); // ONE real-screen transfer per frame
 }
