@@ -1264,3 +1264,7 @@ const uint16_t* const idle_frames[] = {
 };
 
 const int IDLE_FRAME_COUNT = sizeof(idle_frames) / sizeof(idle_frames[0]);
+const int SPRITE_SIZE[] = {
+	100,
+	100
+};
