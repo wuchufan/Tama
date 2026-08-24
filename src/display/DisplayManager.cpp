@@ -1,13 +1,14 @@
 #include "DisplayManager.h"
 
 DisplayManager::DisplayManager()
-  : animator(tft), stats(tft), menuDisplay(tft, animator, stats) {
+  : background(tft), animator(tft, background), stats(tft), menuDisplay(tft, background, animator, stats) {
 }
 
 void DisplayManager::begin() {
   tft.init();
   tft.setRotation(0);
-  tft.fillScreen(TFT_BLACK);
+  tft.setSwapBytes(true);
+  background.draw();
 
   animator.begin();
 }

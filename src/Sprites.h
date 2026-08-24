@@ -14,3 +14,6 @@ extern const uint16_t* const smile_frames[];
 extern const int IDLE_FRAME_COUNT;
 extern const int SMILE_FRAME_COUNT;
 extern const int SPRITE_SIZE[];
+
+// 'main_background', 240x240px, RGB565
+extern const uint16_t main_background[] PROGMEM;

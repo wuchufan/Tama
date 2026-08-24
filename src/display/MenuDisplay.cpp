@@ -1,14 +1,14 @@
 #include "MenuDisplay.h"
 
-MenuDisplay::MenuDisplay(TFT_eSPI& tftRef, AnimationDisplay& animatorRef, StatsDisplay& statsRef)
-  : tft(tftRef), animator(animatorRef), stats(statsRef),
+MenuDisplay::MenuDisplay(TFT_eSPI& tftRef, BackgroundDisplay& backgroundRef, AnimationDisplay& animatorRef, StatsDisplay& statsRef)
+  : tft(tftRef), background(backgroundRef), animator(animatorRef), stats(statsRef),
     wasMenuOpen(false), lastDrawnScreen(nullptr), lastDrawnSelectedIndex(-1) {
 }
 
 void MenuDisplay::checkMenu(const TamaState& tama, MenuStack& menuStack) {
   if (!menuStack.isOpen()) {
     if (wasMenuOpen) {
-      tft.fillScreen(TFT_BLACK);
+      background.draw();
       animator.draw();
       if (animator.isIdle()) {
         stats.draw(tama);

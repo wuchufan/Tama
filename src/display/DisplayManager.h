@@ -2,6 +2,7 @@
 #include <TFT_eSPI.h>
 #include "../TamaState.h"
 #include "../menu/MenuStack.h"
+#include "BackgroundDisplay.h"
 #include "AnimationDisplay.h"
 #include "StatsDisplay.h"
 #include "MenuDisplay.h"
@@ -17,6 +18,7 @@ public:
 
 private:
   TFT_eSPI tft;
+  BackgroundDisplay background;
   AnimationDisplay animator;
   StatsDisplay stats;
   MenuDisplay menuDisplay;

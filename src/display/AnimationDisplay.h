@@ -1,9 +1,10 @@
 #pragma once
 #include <TFT_eSPI.h>
+#include "BackgroundDisplay.h"
 
 class AnimationDisplay {
 public:
-  explicit AnimationDisplay(TFT_eSPI& tft);
+  AnimationDisplay(TFT_eSPI& tft, BackgroundDisplay& background);
 
   void begin();
   void update();
@@ -16,6 +17,7 @@ public:
 private:
   TFT_eSprite character;
   TFT_eSPI& tft;
+  BackgroundDisplay& background;
   static const unsigned long FRAME_DELAY;
 
   const uint16_t* const* activeFrames;
@@ -30,10 +32,11 @@ private:
   int posX;
   int moveDirection;
   static const int MOVE_MIN_X;
-  static const int MOVE_MAX_X;
+  int moveMaxX;    // computed in begin(), not at static-init time — depends on SPRITE_SIZE, defined in a different .cpp file
   static const int MOVE_STEP;
   static const int REGION_X;
-  static const int REGION_WIDTH;
+  int regionWidth; // same reason as moveMaxX
 
   void returnToIdle();
 };
+

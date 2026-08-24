@@ -4,23 +4,29 @@
 const unsigned long AnimationDisplay::FRAME_DELAY = 150; // same cadence as animation.ino
 
 const int AnimationDisplay::MOVE_MIN_X = 10;
-const int AnimationDisplay::MOVE_MAX_X = min(130, 230-SPRITE_SIZE[0]);  // keeps the 100px sprite on a ~240px-wide screen
 const int AnimationDisplay::MOVE_STEP = 2;
 const int AnimationDisplay::REGION_X = MOVE_MIN_X;
-const int AnimationDisplay::REGION_WIDTH = (MOVE_MAX_X - MOVE_MIN_X) + SPRITE_SIZE[0]; // covers the full walking corridor
 
-AnimationDisplay::AnimationDisplay(TFT_eSPI& tft)
+AnimationDisplay::AnimationDisplay(TFT_eSPI& tft, BackgroundDisplay& background)
   : character(&tft),
     tft(tft),
+    background(background),
     activeFrames(idle_frames), activeFrameCount(IDLE_FRAME_COUNT), activeFrameDelay(FRAME_DELAY),
     activeLoops(true), animRepeatsRemaining(0),
     frameIndex(0), lastFrameTime(0),
-    posX(MOVE_MIN_X), moveDirection(1) {
+    posX(MOVE_MIN_X), moveDirection(1),
+    moveMaxX(0), regionWidth(0) {
 }
 
 void AnimationDisplay::begin() {
+  // computed here, not as static const initializers — SPRITE_SIZE lives in Sprites.cpp,
+  // a different translation unit, and C++ doesn't guarantee cross-file static init order.
+  // begin() runs from setup(), which is only ever called after all static init completes.
+  moveMaxX = min(130, 230 - SPRITE_SIZE[0]);   // keeps the 100px sprite on a ~240px-wide screen
+  regionWidth = (moveMaxX - MOVE_MIN_X) + SPRITE_SIZE[0]; // covers the full walking corridor
+
   character.setColorDepth(16);     // RGB565
-  character.createSprite(REGION_WIDTH, 100);
+  character.createSprite(regionWidth, 100);
   character.setSwapBytes(true);
 }
 
@@ -48,9 +54,9 @@ void AnimationDisplay::update() {
 }
 void AnimationDisplay::setIdleMovement(){
     posX += moveDirection * MOVE_STEP;
-    if (posX <= MOVE_MIN_X || posX >= MOVE_MAX_X) {
+    if (posX <= MOVE_MIN_X || posX >= moveMaxX) {
       moveDirection = -moveDirection;
-      posX = constrain(posX, MOVE_MIN_X, MOVE_MAX_X);
+      posX = constrain(posX, MOVE_MIN_X, moveMaxX);
     }
 }
 
@@ -80,7 +86,7 @@ void AnimationDisplay::returnToIdle() {
 }
 
 void AnimationDisplay::draw() {
-  character.fillSprite(TFT_BLACK);                                            // clear the off-screen buffer only — invisible
-  character.pushImage(posX - REGION_X, 0, 100, 100, activeFrames[frameIndex]); // draw character at its position within the region
-  character.pushSprite(REGION_X, 20);                                         // ONE real-screen transfer per frame
+  background.drawPatchInto(character, REGION_X, 20, regionWidth, 100);
+  character.pushImage(posX - REGION_X, 0, 100, 100, const_cast<uint16_t*>(activeFrames[frameIndex]), TFT_BLACK); // TFT_BLACK pixels in the frame art are skipped (transparent), letting the background show through around the character's shape
+  character.pushSprite(REGION_X, 20); // ONE real-screen transfer per frame
 }
