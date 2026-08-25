@@ -16,6 +16,7 @@ public:
 
 private:
   TFT_eSprite character;
+  TFT_eSprite characterFrame; // holds the current frame's raw data so it becomes a real sprite, since pushToSprite() needs a sprite source, not a raw pointer
   TFT_eSPI& tft;
   BackgroundDisplay& background;
   static const unsigned long FRAME_DELAY;
@@ -29,13 +30,14 @@ private:
   int frameIndex;
   unsigned long lastFrameTime;
 
-  int posX;
+  int currentXPos;
+  int currentYPos;
   int moveDirection;
-  static const int MOVE_MIN_X;
-  int moveMaxX;    // computed in begin(), not at static-init time — depends on SPRITE_SIZE, defined in a different .cpp file
+  static const int LEFTMOST_X;
+  int rightMostX;    // computed in begin(), not at static-init time — depends on SPRITE_SIZE, defined in a different .cpp file
   static const int MOVE_STEP;
-  static const int REGION_X;
-  int regionWidth; // same reason as moveMaxX
+  static const int MOTION_CORRIDOR_X;
+  int motionCorridorWidth; // same reason as rightMostX
 
   void returnToIdle();
 };

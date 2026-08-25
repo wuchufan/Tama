@@ -16,7 +16,7 @@ void DisplayManager::begin() {
 void DisplayManager::update(const TamaState& tama) {
   animator.update();
   if (animator.isIdle()) {
-    stats.draw(tama);
+    // stats.draw(tama);
   }
 }
 
