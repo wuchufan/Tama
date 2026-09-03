@@ -9,16 +9,23 @@ extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
 
 static void onMainMenuAction(int id);
+static void onActionsMenuAction(int id);
 static void onDebugMenuAction(int id);
 
 const MenuItem mainMenuItems[] = {
-  { "Feed",  onMainMenuAction, 0 },
-  { "Clean", onMainMenuAction, 1 },
-  { "Play",  onMainMenuAction, 2 },
-  { "Sleep", onMainMenuAction, 3 },
-  { "Debug", onMainMenuAction, 4 },
+  { "Actions", onMainMenuAction, 0 },
+  { "Debug",   onMainMenuAction, 1 },
 };
-MenuScreen mainMenu(mainMenuItems, 5);
+MenuScreen mainMenu(mainMenuItems, 2);
+
+const MenuItem actionsMenuItems[] = {
+  { "Feed",  onActionsMenuAction, 0 },
+  { "Clean", onActionsMenuAction, 1 },
+  { "Play",  onActionsMenuAction, 2 },
+  { "Sleep", onActionsMenuAction, 3 },
+  { "Back",  onActionsMenuAction, 4 },
+};
+MenuScreen actionsMenu(actionsMenuItems, 5);
 
 const MenuItem debugMenuItems[] = {
   { "Social",    onDebugMenuAction, 0 },
@@ -34,6 +41,17 @@ MenuScreen debugMenu(debugMenuItems, 7);
 MenuStack menuStack;
 
 void onMainMenuAction(int id) {
+  switch (id) {
+    case 0:
+      menuStack.push(actionsMenu);
+      break;
+    case 1:
+      menuStack.push(debugMenu);
+      break;
+  }
+}
+
+void onActionsMenuAction(int id) {
   switch (id) {
     case 0:
       Tama.feed();
@@ -53,7 +71,7 @@ void onMainMenuAction(int id) {
       menuStack.closeAll();
       break;
     case 4:
-      menuStack.push(debugMenu);
+      menuStack.pop(); // Back
       break;
   }
 }

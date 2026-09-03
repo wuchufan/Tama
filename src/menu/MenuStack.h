@@ -10,6 +10,7 @@ public:
   void closeAll();
 
   bool isOpen() const;
+  int getDepth() const;
   MenuScreen* current();
 
 private:

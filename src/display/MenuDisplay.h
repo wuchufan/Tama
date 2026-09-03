@@ -4,6 +4,7 @@
 #include "BackgroundDisplay.h"
 #include "AnimationDisplay.h"
 #include "StatsDisplay.h"
+#include "../menu/MenuGrid.h"
 #include "../menu/MenuStack.h"
 
 class MenuDisplay {
@@ -17,10 +18,11 @@ private:
   BackgroundDisplay& background;
   AnimationDisplay& animator;
   StatsDisplay& stats;
+  MenuGrid grid;
 
   bool wasMenuOpen;
   MenuScreen* lastDrawnScreen;
   int lastDrawnSelectedIndex;
 
-  void drawItemList(MenuScreen& screen);
+  void drawTextList(MenuScreen& screen);
 };

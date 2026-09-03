@@ -22,6 +22,10 @@ bool MenuStack::isOpen() const {
   return depth > 0;
 }
 
+int MenuStack::getDepth() const {
+  return depth;
+}
+
 MenuScreen* MenuStack::current() {
   return depth > 0 ? screens[depth - 1] : nullptr;
 }
