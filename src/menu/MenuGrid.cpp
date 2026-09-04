@@ -1,10 +1,7 @@
 #include "MenuGrid.h"
 
-MenuGrid::MenuGrid(TFT_eSPI& tftRef) : tft(tftRef) {
-}
-
-void MenuGrid::draw(MenuScreen& screen) {
-  tft.fillScreen(TFT_BLACK);
+void MenuGrid::draw(MenuScreen& screen, TFT_eSprite& canvas) {
+  canvas.fillSprite(TFT_BLACK);
 
   const int cols = 3;
   const int rows = 3;
@@ -30,6 +27,6 @@ void MenuGrid::draw(MenuScreen& screen) {
     int iconX = cellX + (cellW - iconW) / 2;
     int iconY = cellY + (cellH - iconH) / 2;
 
-    tft.fillRoundRect(iconX, iconY, iconW, iconH, 6, palette[i % 9]);
+    canvas.fillRoundRect(iconX, iconY, iconW, iconH, 6, palette[i % 9]);
   }
 }

@@ -57,7 +57,8 @@ void onMainMenuAction(int id) {
       menuStack.push(debugMenu);
       break;
     case 2:
-      Serial.println("Not implemented yet");
+      Serial.printf("Free heap: %.2f /  %.2f KB\n", ESP.getFreeHeap()/1024.0, ESP.getSketchSize()/1024.0);
+      Serial.printf("Free sketch space: %.2f / %.2f KB\n", ESP.getFreeSketchSpace()/1024.0, ESP.getFlashChipSize()/1024.0);
       break;
     case 3:
       Serial.println("Not implemented yet");

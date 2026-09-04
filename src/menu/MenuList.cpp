@@ -1,10 +1,7 @@
 #include "MenuList.h"
 
-MenuList::MenuList(TFT_eSPI& tftRef) : tft(tftRef) {
-}
-
-void MenuList::draw(MenuScreen& screen) {
-  tft.fillScreen(TFT_BLACK);
+void MenuList::draw(MenuScreen& screen, TFT_eSprite& canvas) {
+  canvas.fillSprite(TFT_BLACK);
 
   int itemCount = screen.getItemCount();
   int selectedIndex = screen.getSelectedIndex();
@@ -18,7 +15,7 @@ void MenuList::draw(MenuScreen& screen) {
   int availableHeight = 240 - 2 * marginY;
   int bubbleHeight = (availableHeight - (itemCount - 1) * gap) / itemCount;
 
-  tft.setTextSize(2);
+  canvas.setTextSize(2);
 
   for (int i = 0; i < itemCount; i++) {
     int cellY = marginY + i * (bubbleHeight + gap);
@@ -30,18 +27,18 @@ void MenuList::draw(MenuScreen& screen) {
     int y = cellY - (selected ? selectedBump / 2 : 0);
 
     if (selected) {
-      tft.fillRoundRect(x, y, w, h, h / 2, TFT_YELLOW);
-      tft.setTextColor(TFT_BLACK, TFT_YELLOW);
+      canvas.fillRoundRect(x, y, w, h, h / 2, TFT_YELLOW);
+      canvas.setTextColor(TFT_BLACK, TFT_YELLOW);
     } else {
-      tft.drawRoundRect(x, y, w, h, h / 2, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      canvas.drawRoundRect(x, y, w, h, h / 2, TFT_WHITE);
+      canvas.setTextColor(TFT_WHITE, TFT_BLACK);
     }
 
     const char* label = screen.getLabel(i);
-    int textW = tft.textWidth(label);
+    int textW = canvas.textWidth(label);
     int textX = x + (w - textW) / 2;
     int textY = y + (h - 16) / 2; // text size 2 glyph height ~16px
-    tft.setCursor(textX, textY);
-    tft.print(label);
+    canvas.setCursor(textX, textY);
+    canvas.print(label);
   }
 }

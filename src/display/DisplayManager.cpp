@@ -11,6 +11,7 @@ void DisplayManager::begin() {
   background.draw();
 
   animator.begin();
+  menuDisplay.begin();
 }
 
 void DisplayManager::update(const TamaState& tama) {
