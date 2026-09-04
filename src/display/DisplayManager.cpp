@@ -20,7 +20,7 @@ void DisplayManager::update(const TamaState& tama) {
   }
 }
 
-void DisplayManager::checkMenu(const TamaState& tama, MenuStack& menuStack) {
+void DisplayManager::checkDisplayMenu(const TamaState& tama, MenuStack& menuStack) {
   menuDisplay.checkMenu(tama, menuStack);
 }
 

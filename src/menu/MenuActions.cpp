@@ -15,8 +15,16 @@ static void onDebugMenuAction(int id);
 const MenuItem mainMenuItems[] = {
   { "Actions", onMainMenuAction, 0 },
   { "Debug",   onMainMenuAction, 1 },
+  { "placeholder",   onMainMenuAction, 2 },
+  { "placeholder",   onMainMenuAction, 3 },
+  { "placeholder",   onMainMenuAction, 4 },
+  { "placeholder",   onMainMenuAction, 5 },
+  { "placeholder",   onMainMenuAction, 6 },
+  { "placeholder",   onMainMenuAction, 7 },
+  { "placeholder",   onMainMenuAction, 8 },
+
 };
-MenuScreen mainMenu(mainMenuItems, 2);
+MenuScreen mainMenu(mainMenuItems, 9);
 
 const MenuItem actionsMenuItems[] = {
   { "Feed",  onActionsMenuAction, 0 },
@@ -47,6 +55,27 @@ void onMainMenuAction(int id) {
       break;
     case 1:
       menuStack.push(debugMenu);
+      break;
+    case 2:
+      Serial.println("Not implemented yet");
+      break;
+    case 3:
+      Serial.println("Not implemented yet");
+      break;
+    case 4:
+      Serial.println("Not implemented yet");
+      break;
+    case 5:
+      Serial.println("Not implemented yet");
+      break;
+    case 6:
+      Serial.println("Not implemented yet");
+      break;
+    case 7:
+      Serial.println("Not implemented yet");
+      break;
+    case 8:
+      Serial.println("Not implemented yet");
       break;
   }
 }

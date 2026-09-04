@@ -13,7 +13,7 @@ public:
 
   void begin();
   void update(const TamaState& tama);
-  void checkMenu(const TamaState& tama, MenuStack& menuStack);
+  void checkDisplayMenu(const TamaState& tama, MenuStack& menuStack);
   void playFeedAnimation();
 
 private:

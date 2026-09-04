@@ -40,12 +40,12 @@ void loop() {
   }
 
   if (menuStack.isOpen()) {
-    Display.checkMenu(Tama, menuStack);
+    Display.checkDisplayMenu(Tama, menuStack);
 
     if (buttonNext.readButton())    menuStack.current()->next();
     if (buttonConfirm.readButton()) menuStack.current()->select();
   } else {
     Display.update(Tama);
-    Display.checkMenu(Tama, menuStack);
+    Display.checkDisplayMenu(Tama, menuStack);
   }
 }
