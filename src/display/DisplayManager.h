@@ -7,6 +7,9 @@
 #include "AnimationDisplay.h"
 #include "StatsDisplay.h"
 #include "MenuDisplay.h"
+#include "ScreenManager.h"
+#include "IdleScreen.h"
+#include "StatsScreen.h"
 
 class DisplayManager {
 public:
@@ -26,5 +29,7 @@ private:
   AnimationDisplay animator;
   StatsDisplay stats;
   MenuDisplay menuDisplay;
-  bool showingStats;
+  ScreenManager screens;
+  IdleScreen idleScreen;
+  StatsScreen statsScreen;
 };
