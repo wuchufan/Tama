@@ -2,7 +2,7 @@
 #include "../TamaState.h"
 #include "../CharacterManager.h"
 #include "../EconomyManager.h"
-#include "../minigames/FlappyBird.h"
+#include "../minigames/MinigameManager.h"
 #include "../display/DisplayManager.h"
 #include <Arduino.h>
 
@@ -10,8 +10,7 @@ extern TamaState Tama;             // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
 extern EconomyManager Economy;     // defined in main.cpp
-extern FlappyBird FlappyBirdGame;  // defined in main.cpp
-extern bool minigameActive;        // defined in main.cpp
+extern MinigameManager Minigames;  // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onActionsMenuAction(int id);
@@ -174,8 +173,7 @@ void onShopMenuAction(int id) {
 void onMinigamesMenuAction(int id) {
   switch (id) {
     case 0:
-      FlappyBirdGame.start();
-      minigameActive = true;
+      Minigames.playFlappyBird();
       menuStack.closeAll();
       break;
     case 1:

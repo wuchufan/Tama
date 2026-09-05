@@ -4,7 +4,7 @@
 #include "CharacterManager.h"
 #include "TamaEventsManager.h"
 #include "EconomyManager.h"
-#include "minigames/FlappyBird.h"
+#include "minigames/MinigameManager.h"
 #include "menu/MenuActions.h"
 
 InputManager buttonConfirm(1);
@@ -16,8 +16,7 @@ DisplayManager Display;
 CharacterManager Character;
 TamaEventsManager Events(Tama, Character);
 EconomyManager Economy;
-FlappyBird FlappyBirdGame(Display.getCanvas());
-bool minigameActive = false;
+MinigameManager Minigames(Display.getCanvas());
 
 void setup() {
   Serial.begin(115200);
@@ -36,11 +35,11 @@ void loop() {
   Character.update();
   Events.update();
 
-  if (minigameActive) {
-    if (buttonNext.readButton()) FlappyBirdGame.flap();
-    if (buttonC.readButton()) minigameActive = false;
-    FlappyBirdGame.update();
-    FlappyBirdGame.draw();
+  if (Minigames.isMinigameActive()) {
+    if (buttonNext.readButton()) Minigames.primaryAction();
+    if (buttonC.readButton())    Minigames.toggleMinigame();
+    Minigames.update();
+    Minigames.draw();
     return;
   }
 

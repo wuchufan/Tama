@@ -1,17 +1,18 @@
 #pragma once
 #include <TFT_eSPI.h>
+#include "Minigame.h"
 
-class FlappyBird {
+class FlappyBird : public Minigame {
 public:
   explicit FlappyBird(TFT_eSprite& canvas);
 
-  void start(); // resets game state
+  void start() override; // resets game state
 
-  void update();
-  void draw();
-  void flap();
+  void update() override;
+  void draw() override;
+  void primaryAction() override; // flaps
 
-  bool isGameOver() const;
+  bool isGameOver() const override;
   int getScore() const;
 
 private:
