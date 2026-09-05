@@ -16,7 +16,6 @@ public:
   void sleep();
   void clean();
 
-
 private:
   int statusDropRate;
 };

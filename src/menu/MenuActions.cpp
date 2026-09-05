@@ -59,6 +59,8 @@ void onMainMenuAction(int id) {
     case 2:
       Serial.printf("Free heap: %.2f /  %.2f KB\n", ESP.getFreeHeap()/1024.0, ESP.getSketchSize()/1024.0);
       Serial.printf("Free sketch space: %.2f / %.2f KB\n", ESP.getFreeSketchSpace()/1024.0, ESP.getFlashChipSize()/1024.0);
+      Serial.printf("PSRAM found: %s\n", psramFound() ? "yes" : "no");
+      Serial.printf("Free PSRAM: %.2f KB\n", ESP.getFreePsram() / 1024.0);
       break;
     case 3:
       Serial.println("Not implemented yet");

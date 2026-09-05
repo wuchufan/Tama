@@ -1,9 +1,10 @@
 #include "TamaEventsManager.h"
+#include "Config.h"
 #include <Arduino.h>
 
-const unsigned long TamaEventsManager::EVENT_CHECK_INTERVAL = 10000; // check every 10s (placeholder)
-const int TamaEventsManager::EVENT_CHANCE_PERCENT = 20;              // 20% chance per check (placeholder)
-const unsigned long TamaEventsManager::SICK_DURATION = 30000;        // auto-recovers after 30s if not cured (placeholder)
+const unsigned long TamaEventsManager::EVENT_CHECK_INTERVAL = Config::Events::CHECK_INTERVAL;
+const int TamaEventsManager::EVENT_CHANCE_PERCENT = Config::Events::CHANCE_PERCENT;
+const unsigned long TamaEventsManager::SICK_DURATION = Config::Events::SICK_DURATION;
 
 TamaEventsManager::TamaEventsManager(TamaState& tamaRef, CharacterManager& characterRef)
   : tama(tamaRef), character(characterRef),

@@ -1,11 +1,12 @@
 #include "TamaState.h"
+#include "Config.h"
 #include <Arduino.h>
 
 TamaState::TamaState()
-:food(100),
- happiness(100),
- energy(100),
- statusDropRate(1000)
+:food(Config::Tama::INITIAL_FOOD),
+ happiness(Config::Tama::INITIAL_HAPPINESS),
+ energy(Config::Tama::INITIAL_ENERGY),
+ statusDropRate(Config::Tama::STATUS_DROP_RATE)
 {}
 
 void TamaState::update() {

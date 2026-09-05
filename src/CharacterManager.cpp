@@ -1,8 +1,9 @@
 #include "CharacterManager.h"
+#include "Config.h"
 
-const unsigned long CharacterManager::EGG_DURATION = 3000;      // 30s as egg (placeholder)
-const unsigned long CharacterManager::INFANCY_DURATION = 3000; // 30s infancy (placeholder)
-const unsigned long CharacterManager::PUBERTY_DURATION = 3000; // 30s puberty (placeholder)
+const unsigned long CharacterManager::EGG_DURATION = Config::Growth::EGG_DURATION;
+const unsigned long CharacterManager::INFANCY_DURATION = Config::Growth::INFANCY_DURATION;
+const unsigned long CharacterManager::PUBERTY_DURATION = Config::Growth::PUBERTY_DURATION;
 
 CharacterManager::CharacterManager()
   : stage(GrowthStage::EGG), stageStartTime(0),
