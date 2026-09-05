@@ -1,21 +1,24 @@
 #include "MenuActions.h"
 #include "../TamaState.h"
 #include "../CharacterManager.h"
+#include "../EconomyManager.h"
 #include "../display/DisplayManager.h"
 #include <Arduino.h>
 
 extern TamaState Tama;             // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
+extern EconomyManager Economy;     // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onActionsMenuAction(int id);
 static void onDebugMenuAction(int id);
+static void onShopMenuAction(int id);
 
 const MenuItem mainMenuItems[] = {
   { "Actions", onMainMenuAction, 0 },
   { "Debug",   onMainMenuAction, 1 },
-  { "placeholder",   onMainMenuAction, 2 },
+  { "Shop",    onMainMenuAction, 2 },
   { "placeholder",   onMainMenuAction, 3 },
   { "placeholder",   onMainMenuAction, 4 },
   { "placeholder",   onMainMenuAction, 5 },
@@ -46,6 +49,15 @@ const MenuItem debugMenuItems[] = {
 };
 MenuScreen debugMenu(debugMenuItems, 7);
 
+const MenuItem shopMenuItems[] = {
+  { "PlayStation",    onShopMenuAction, 0 },
+  { "Shepherd's Pie", onShopMenuAction, 1 },
+  { "Chips",          onShopMenuAction, 2 },
+  { "Diet Coke",      onShopMenuAction, 3 },
+  { "Back",           onShopMenuAction, 4 },
+};
+MenuScreen shopMenu(shopMenuItems, 5);
+
 MenuStack menuStack;
 
 void onMainMenuAction(int id) {
@@ -57,10 +69,7 @@ void onMainMenuAction(int id) {
       menuStack.push(debugMenu);
       break;
     case 2:
-      Serial.printf("Free heap: %.2f /  %.2f KB\n", ESP.getFreeHeap()/1024.0, ESP.getSketchSize()/1024.0);
-      Serial.printf("Free sketch space: %.2f / %.2f KB\n", ESP.getFreeSketchSpace()/1024.0, ESP.getFlashChipSize()/1024.0);
-      Serial.printf("PSRAM found: %s\n", psramFound() ? "yes" : "no");
-      Serial.printf("Free PSRAM: %.2f KB\n", ESP.getFreePsram() / 1024.0);
+      menuStack.push(shopMenu);
       break;
     case 3:
       Serial.println("Not implemented yet");
@@ -78,7 +87,10 @@ void onMainMenuAction(int id) {
       Serial.println("Not implemented yet");
       break;
     case 8:
-      Serial.println("Not implemented yet");
+      Serial.printf("Free heap: %.2f /  %.2f KB\n", ESP.getFreeHeap()/1024.0, ESP.getSketchSize()/1024.0);
+      Serial.printf("Free sketch space: %.2f / %.2f KB\n", ESP.getFreeSketchSpace()/1024.0, ESP.getFlashChipSize()/1024.0);
+      Serial.printf("PSRAM found: %s\n", psramFound() ? "yes" : "no");
+      Serial.printf("Free PSRAM: %.2f KB\n", ESP.getFreePsram() / 1024.0);
       break;
   }
 }
@@ -121,5 +133,29 @@ void onDebugMenuAction(int id) {
       break;
     }
     case 6: menuStack.pop(); break;
+  }
+}
+
+void onShopMenuAction(int id) {
+  switch (id) {
+    case 0:
+      if (Economy.purchase(ShopItem::PLAYSTATION)) Serial.println("Bought PlayStation");
+      else Serial.println("Not enough money");
+      break;
+    case 1:
+      if (Economy.purchase(ShopItem::SHEPHERDS_PIE)) Serial.println("Bought Shepherd's Pie");
+      else Serial.println("Not enough money");
+      break;
+    case 2:
+      if (Economy.purchase(ShopItem::CHIPS)) Serial.println("Bought Chips");
+      else Serial.println("Not enough money");
+      break;
+    case 3:
+      if (Economy.purchase(ShopItem::DIET_COKE)) Serial.println("Bought Diet Coke");
+      else Serial.println("Not enough money");
+      break;
+    case 4:
+      menuStack.pop(); // Back
+      break;
   }
 }

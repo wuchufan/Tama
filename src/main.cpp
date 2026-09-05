@@ -3,6 +3,7 @@
 #include "display/DisplayManager.h"
 #include "CharacterManager.h"
 #include "TamaEventsManager.h"
+#include "EconomyManager.h"
 #include "menu/MenuActions.h"
 
 InputManager buttonConfirm(1);
@@ -13,6 +14,7 @@ TamaState Tama;
 DisplayManager Display;
 CharacterManager Character;
 TamaEventsManager Events(Tama, Character);
+EconomyManager Economy;
 
 void setup() {
   Serial.begin(115200);

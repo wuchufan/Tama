@@ -19,4 +19,23 @@ namespace Config {
     constexpr unsigned long INFANCY_DURATION = 3000; // placeholder
     constexpr unsigned long PUBERTY_DURATION = 3000; // placeholder
   }
+
+  namespace Economy {
+    constexpr int INITIAL_MONEY = 0;
+  }
+
+  namespace Shop {
+    struct ItemInfo {
+      int price;
+      int initialQuantity;
+    };
+
+    // indexed by ShopItem — row order must match the enum's declaration order
+    constexpr ItemInfo ITEMS[] = {
+      { 200, 0 }, // PLAYSTATION
+      { 15,  0 }, // SHEPHERDS_PIE
+      { 5,   0 }, // CHIPS
+      { 3,   0 }, // DIET_COKE
+    };
+  }
 }
