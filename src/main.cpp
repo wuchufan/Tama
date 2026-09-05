@@ -7,8 +7,8 @@
 #include "minigames/MinigameManager.h"
 #include "menu/MenuActions.h"
 
-InputManager buttonConfirm(1);
-InputManager buttonNext(2);
+InputManager buttonA(1);
+InputManager buttonB(2);
 InputManager buttonC(3);
 
 TamaState Tama;
@@ -25,8 +25,8 @@ void setup() {
   Display.begin();
   Character.begin();
 
-  buttonConfirm.init();
-  buttonNext.init();
+  buttonA.init();
+  buttonB.init();
   buttonC.init();
 }
 
@@ -36,7 +36,7 @@ void loop() {
   Events.update();
 
   if (Minigames.isMinigameActive()) {
-    if (buttonNext.readButton()) Minigames.primaryAction();
+    if (buttonB.readButton()) Minigames.primaryAction();
     if (buttonC.readButton())    Minigames.toggleMinigame();
     Minigames.update();
     Minigames.draw();
@@ -54,10 +54,10 @@ void loop() {
   if (menuStack.isOpen()) {
     Display.checkDisplayMenu(Tama, menuStack);
 
-    if (buttonNext.readButton())    menuStack.current()->next();
-    if (buttonConfirm.readButton()) menuStack.current()->select();
+    if (buttonB.readButton())    menuStack.current()->next();
+    if (buttonA.readButton()) menuStack.current()->select();
   } else {
-    Display.update(Tama);
+    Display.update(Tama, Economy);
     Display.checkDisplayMenu(Tama, menuStack);
   }
 }

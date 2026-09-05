@@ -2,6 +2,7 @@
 #include <TFT_eSPI.h>
 #include "../TamaState.h"
 #include "../menu/MenuStack.h"
+#include "../EconomyManager.h"
 #include "BackgroundDisplay.h"
 #include "AnimationDisplay.h"
 #include "StatsDisplay.h"
@@ -12,7 +13,7 @@ public:
   DisplayManager();
 
   void begin();
-  void update(const TamaState& tama);
+  void update(const TamaState& tama, const EconomyManager& economy);
   void checkDisplayMenu(const TamaState& tama, MenuStack& menuStack);
   void playFeedAnimation();
   TFT_eSprite& getCanvas();

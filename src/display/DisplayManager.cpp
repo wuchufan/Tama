@@ -18,10 +18,10 @@ void DisplayManager::begin() {
   canvas.setSwapBytes(true);
 }
 
-void DisplayManager::update(const TamaState& tama) {
+void DisplayManager::update(const TamaState& tama, const EconomyManager& economy) {
   animator.update();
   if (animator.isIdle()) {
-    // stats.draw(tama);
+    // stats.draw(tama, economy);
   }
 }
 
