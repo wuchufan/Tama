@@ -13,7 +13,7 @@ public:
   void primaryAction() override; // flaps
 
   bool isGameOver() const override;
-  int getScore() const;
+  int getScore() const override;
 
 private:
   struct Pipe {

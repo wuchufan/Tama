@@ -1,8 +1,12 @@
 #include "MinigameManager.h"
 #include <Arduino.h>
+#include "../EconomyManager.h"
+
+extern EconomyManager Economy; // defined in main.cpp
 
 namespace {
   constexpr unsigned long GAME_OVER_DELAY = 3000; // ms to show the game-over screen before returning to idle
+  constexpr int MONEY_PER_POINT = 1; // how much each score point is worth
 }
 
 MinigameManager::MinigameManager(TFT_eSprite& canvasRef)
@@ -26,7 +30,11 @@ void MinigameManager::update() {
   activeGame->update();
 
   if (activeGame->isGameOver()) {
-    if (gameOverTime == 0) gameOverTime = millis();
+    if (gameOverTime == 0) {
+      gameOverTime = millis();
+      Economy.earn(activeGame->getScore() * MONEY_PER_POINT);
+      Serial.printf("Money: %d", Economy.getMoney());
+    }
 
     if (millis() - gameOverTime >= GAME_OVER_DELAY) {
       minigameActive = false;
