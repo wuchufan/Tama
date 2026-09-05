@@ -1,7 +1,8 @@
 #include "DisplayManager.h"
 
 DisplayManager::DisplayManager()
-  : background(tft), animator(tft, background), stats(tft), menuDisplay(tft, background, animator, stats) {
+  : canvas(&tft),
+    background(tft), animator(tft, background), stats(tft), menuDisplay(tft, background, animator, stats, canvas) {
 }
 
 void DisplayManager::begin() {
@@ -11,7 +12,10 @@ void DisplayManager::begin() {
   background.draw();
 
   animator.begin();
-  menuDisplay.begin();
+
+  canvas.setColorDepth(16);
+  canvas.createSprite(240, 240);
+  canvas.setSwapBytes(true);
 }
 
 void DisplayManager::update(const TamaState& tama) {
@@ -27,4 +31,8 @@ void DisplayManager::checkDisplayMenu(const TamaState& tama, MenuStack& menuStac
 
 void DisplayManager::playFeedAnimation() {
   animator.playFeedAnimation();
+}
+
+TFT_eSprite& DisplayManager::getCanvas() {
+  return canvas;
 }

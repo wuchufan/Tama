@@ -2,6 +2,7 @@
 #include "../TamaState.h"
 #include "../CharacterManager.h"
 #include "../EconomyManager.h"
+#include "../minigames/FlappyBird.h"
 #include "../display/DisplayManager.h"
 #include <Arduino.h>
 
@@ -9,17 +10,20 @@ extern TamaState Tama;             // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
 extern EconomyManager Economy;     // defined in main.cpp
+extern FlappyBird FlappyBirdGame;  // defined in main.cpp
+extern bool minigameActive;        // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onActionsMenuAction(int id);
 static void onDebugMenuAction(int id);
 static void onShopMenuAction(int id);
+static void onMinigamesMenuAction(int id);
 
 const MenuItem mainMenuItems[] = {
-  { "Actions", onMainMenuAction, 0 },
-  { "Debug",   onMainMenuAction, 1 },
-  { "Shop",    onMainMenuAction, 2 },
-  { "placeholder",   onMainMenuAction, 3 },
+  { "Actions",   onMainMenuAction, 0 },
+  { "Debug",     onMainMenuAction, 1 },
+  { "Shop",      onMainMenuAction, 2 },
+  { "Minigames", onMainMenuAction, 3 },
   { "placeholder",   onMainMenuAction, 4 },
   { "placeholder",   onMainMenuAction, 5 },
   { "placeholder",   onMainMenuAction, 6 },
@@ -58,6 +62,12 @@ const MenuItem shopMenuItems[] = {
 };
 MenuScreen shopMenu(shopMenuItems, 5);
 
+const MenuItem minigamesMenuItems[] = {
+  { "Flappy Bird", onMinigamesMenuAction, 0 },
+  { "Back",        onMinigamesMenuAction, 1 },
+};
+MenuScreen minigamesMenu(minigamesMenuItems, 2);
+
 MenuStack menuStack;
 
 void onMainMenuAction(int id) {
@@ -72,7 +82,7 @@ void onMainMenuAction(int id) {
       menuStack.push(shopMenu);
       break;
     case 3:
-      Serial.println("Not implemented yet");
+      menuStack.push(minigamesMenu);
       break;
     case 4:
       Serial.println("Not implemented yet");
@@ -141,6 +151,7 @@ void onShopMenuAction(int id) {
     case 0:
       if (Economy.purchase(ShopItem::PLAYSTATION)) Serial.println("Bought PlayStation");
       else Serial.println("Not enough money");
+      Serial.printf("Money: %d\n", Economy.getMoney());
       break;
     case 1:
       if (Economy.purchase(ShopItem::SHEPHERDS_PIE)) Serial.println("Bought Shepherd's Pie");
@@ -155,6 +166,19 @@ void onShopMenuAction(int id) {
       else Serial.println("Not enough money");
       break;
     case 4:
+      menuStack.pop(); // Back
+      break;
+  }
+}
+
+void onMinigamesMenuAction(int id) {
+  switch (id) {
+    case 0:
+      FlappyBirdGame.start();
+      minigameActive = true;
+      menuStack.closeAll();
+      break;
+    case 1:
       menuStack.pop(); // Back
       break;
   }

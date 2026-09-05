@@ -1,14 +1,8 @@
 #include "MenuDisplay.h"
 
-MenuDisplay::MenuDisplay(TFT_eSPI& tftRef, BackgroundDisplay& backgroundRef, AnimationDisplay& animatorRef, StatsDisplay& statsRef)
-  : tft(tftRef), background(backgroundRef), animator(animatorRef), stats(statsRef), canvas(&tftRef),
+MenuDisplay::MenuDisplay(TFT_eSPI& tftRef, BackgroundDisplay& backgroundRef, AnimationDisplay& animatorRef, StatsDisplay& statsRef, TFT_eSprite& canvasRef)
+  : tft(tftRef), background(backgroundRef), animator(animatorRef), stats(statsRef), canvas(canvasRef),
     wasMenuOpen(false), lastDrawnScreen(nullptr), lastDrawnSelectedIndex(-1) {
-}
-
-void MenuDisplay::begin() {
-  canvas.setColorDepth(16);
-  canvas.createSprite(240, 240);
-  canvas.setSwapBytes(true);
 }
 
 void MenuDisplay::checkMenu(const TamaState& tama, MenuStack& menuStack) {

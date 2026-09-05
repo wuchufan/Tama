@@ -15,9 +15,11 @@ public:
   void update(const TamaState& tama);
   void checkDisplayMenu(const TamaState& tama, MenuStack& menuStack);
   void playFeedAnimation();
+  TFT_eSprite& getCanvas();
 
 private:
   TFT_eSPI tft;
+  TFT_eSprite canvas;
   BackgroundDisplay background;
   AnimationDisplay animator;
   StatsDisplay stats;

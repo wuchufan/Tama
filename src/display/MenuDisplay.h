@@ -10,9 +10,8 @@
 
 class MenuDisplay {
 public:
-  MenuDisplay(TFT_eSPI& tft, BackgroundDisplay& background, AnimationDisplay& animator, StatsDisplay& stats);
+  MenuDisplay(TFT_eSPI& tft, BackgroundDisplay& background, AnimationDisplay& animator, StatsDisplay& stats, TFT_eSprite& canvas);
 
-  void begin();
   void checkMenu(const TamaState& tama, MenuStack& menuStack);
 
 private:
@@ -22,7 +21,7 @@ private:
   StatsDisplay& stats;
   MenuGrid grid;
   MenuList list;
-  TFT_eSprite canvas;
+  TFT_eSprite& canvas;
 
   bool wasMenuOpen;
   MenuScreen* lastDrawnScreen;

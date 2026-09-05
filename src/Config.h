@@ -21,7 +21,7 @@ namespace Config {
   }
 
   namespace Economy {
-    constexpr int INITIAL_MONEY = 0;
+    constexpr int INITIAL_MONEY = 1000000;
   }
 
   namespace Shop {
