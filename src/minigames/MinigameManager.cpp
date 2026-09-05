@@ -33,7 +33,6 @@ void MinigameManager::update() {
     if (gameOverTime == 0) {
       gameOverTime = millis();
       Economy.earn(activeGame->getScore() * MONEY_PER_POINT);
-      Serial.printf("Money: %d", Economy.getMoney());
     }
 
     if (millis() - gameOverTime >= GAME_OVER_DELAY) {

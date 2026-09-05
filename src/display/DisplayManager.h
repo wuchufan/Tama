@@ -16,6 +16,7 @@ public:
   void update(const TamaState& tama, const EconomyManager& economy);
   void checkDisplayMenu(const TamaState& tama, MenuStack& menuStack);
   void playFeedAnimation();
+  void toggleStatsScreen();
   TFT_eSprite& getCanvas();
 
 private:
@@ -25,4 +26,5 @@ private:
   AnimationDisplay animator;
   StatsDisplay stats;
   MenuDisplay menuDisplay;
+  bool showingStats;
 };

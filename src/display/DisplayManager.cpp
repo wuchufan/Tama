@@ -2,7 +2,8 @@
 
 DisplayManager::DisplayManager()
   : canvas(&tft),
-    background(tft), animator(tft, background), stats(tft), menuDisplay(tft, background, animator, stats, canvas) {
+    background(tft), animator(tft, background), stats(tft), menuDisplay(tft, background, animator, stats, canvas),
+    showingStats(false) {
 }
 
 void DisplayManager::begin() {
@@ -19,13 +20,16 @@ void DisplayManager::begin() {
 }
 
 void DisplayManager::update(const TamaState& tama, const EconomyManager& economy) {
-  animator.update();
-  if (animator.isIdle()) {
-    // stats.draw(tama, economy);
+  if (showingStats) {
+    stats.draw(tama, economy);
+    return;
   }
+
+  animator.update();
 }
 
 void DisplayManager::checkDisplayMenu(const TamaState& tama, MenuStack& menuStack) {
+  if (menuStack.isOpen()) showingStats = false;
   menuDisplay.checkMenu(tama, menuStack);
 }
 
@@ -35,4 +39,13 @@ void DisplayManager::playFeedAnimation() {
 
 TFT_eSprite& DisplayManager::getCanvas() {
   return canvas;
+}
+
+void DisplayManager::toggleStatsScreen() {
+  showingStats = !showingStats;
+  if (showingStats) {
+    background.clearScreen(); // black backdrop for the stats screen
+  } else {
+    background.draw(); // restore the wallpaper before resuming the walking animation
+  }
 }

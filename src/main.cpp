@@ -57,6 +57,7 @@ void loop() {
     if (buttonB.readButton())    menuStack.current()->next();
     if (buttonA.readButton()) menuStack.current()->select();
   } else {
+    if (buttonB.readButton()) Display.toggleStatsScreen();
     Display.update(Tama, Economy);
     Display.checkDisplayMenu(Tama, menuStack);
   }
