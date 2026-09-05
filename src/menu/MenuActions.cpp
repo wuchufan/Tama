@@ -3,7 +3,9 @@
 #include "../CharacterManager.h"
 #include "../EconomyManager.h"
 #include "../minigames/MinigameManager.h"
+#include "../minigames/MinigameScreen.h"
 #include "../display/DisplayManager.h"
+#include "../display/ScreenManager.h"
 #include <Arduino.h>
 
 extern TamaState Tama;             // defined in main.cpp
@@ -11,6 +13,8 @@ extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
 extern EconomyManager Economy;     // defined in main.cpp
 extern MinigameManager Minigames;  // defined in main.cpp
+extern ScreenManager AppScreens;      // defined in main.cpp
+extern MinigameScreen minigameScreen; // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onActionsMenuAction(int id);
@@ -175,6 +179,7 @@ void onMinigamesMenuAction(int id) {
     case 0:
       Minigames.playFlappyBird();
       menuStack.closeAll();
+      AppScreens.switchTo(minigameScreen);
       break;
     case 1:
       menuStack.pop(); // Back

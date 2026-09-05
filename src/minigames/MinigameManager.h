@@ -12,15 +12,13 @@ public:
   void primaryAction();
 
   void playFlappyBird();
-  void toggleMinigame(); // called by the exit button while a game is active
 
   bool isGameOver() const;
-  bool isMinigameActive() const;
+  bool isReadyToExit() const; // true once the game-over delay has elapsed
 
 private:
   TFT_eSprite& canvas;
   FlappyBird flappyBird;
   Minigame* activeGame;
-  bool minigameActive;
   unsigned long gameOverTime;
 };

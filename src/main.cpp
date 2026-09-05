@@ -5,6 +5,9 @@
 #include "TamaEventsManager.h"
 #include "EconomyManager.h"
 #include "minigames/MinigameManager.h"
+#include "minigames/MinigameScreen.h"
+#include "NormalDisplayScreen.h"
+#include "display/ScreenManager.h"
 #include "menu/MenuActions.h"
 
 InputManager buttonA(1);
@@ -18,6 +21,10 @@ TamaEventsManager Events(Tama, Character);
 EconomyManager Economy;
 MinigameManager Minigames(Display.getCanvas());
 
+ScreenManager AppScreens;
+NormalDisplayScreen normalScreen(Display);
+MinigameScreen minigameScreen(Minigames, AppScreens, normalScreen);
+
 void setup() {
   Serial.begin(115200);
   Serial.println("Setup complete");
@@ -28,6 +35,8 @@ void setup() {
   buttonA.init();
   buttonB.init();
   buttonC.init();
+
+  AppScreens.switchTo(normalScreen);
 }
 
 void loop() {
@@ -35,30 +44,9 @@ void loop() {
   Character.update();
   Events.update();
 
-  if (Minigames.isMinigameActive()) {
-    if (buttonB.readButton()) Minigames.primaryAction();
-    if (buttonC.readButton())    Minigames.toggleMinigame();
-    Minigames.update();
-    Minigames.draw();
-    return;
-  }
+  if (buttonB.readButton()) AppScreens.onButtonB();
+  if (buttonA.readButton()) AppScreens.onButtonA();
+  if (buttonC.readButton()) AppScreens.onButtonC();
 
-  if (buttonC.readButton()) {
-    if (menuStack.isOpen()) {
-      menuStack.closeAll();
-    } else {
-      menuStack.push(mainMenu);
-    }
-  }
-
-  if (menuStack.isOpen()) {
-    Display.checkDisplayMenu(Tama, menuStack);
-
-    if (buttonB.readButton())    menuStack.current()->next();
-    if (buttonA.readButton()) menuStack.current()->select();
-  } else {
-    if (buttonB.readButton()) Display.toggleStatsScreen();
-    Display.update(Tama, Economy);
-    Display.checkDisplayMenu(Tama, menuStack);
-  }
+  AppScreens.update(Tama, Economy);
 }

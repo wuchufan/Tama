@@ -38,6 +38,10 @@ TFT_eSprite& DisplayManager::getCanvas() {
   return canvas;
 }
 
+void DisplayManager::refreshBackground() {
+  background.draw();
+}
+
 void DisplayManager::toggleStatsScreen() {
   if (screens.isShowing(statsScreen)) {
     screens.switchTo(idleScreen);

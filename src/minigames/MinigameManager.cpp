@@ -10,50 +10,38 @@ namespace {
 }
 
 MinigameManager::MinigameManager(TFT_eSprite& canvasRef)
-  : canvas(canvasRef), flappyBird(canvasRef), activeGame(nullptr), minigameActive(false), gameOverTime(0) {
+  : canvas(canvasRef), flappyBird(canvasRef), activeGame(nullptr), gameOverTime(0) {
 }
 
 void MinigameManager::playFlappyBird() {
   activeGame = &flappyBird;
   flappyBird.start();
-  minigameActive = true;
   gameOverTime = 0;
 }
 
-void MinigameManager::toggleMinigame() {
-  minigameActive = !minigameActive;
-}
-
 void MinigameManager::update() {
-  if (!minigameActive || !activeGame) return;
+  if (!activeGame) return;
 
   activeGame->update();
 
-  if (activeGame->isGameOver()) {
-    if (gameOverTime == 0) {
-      gameOverTime = millis();
-      Economy.earn(activeGame->getScore() * MONEY_PER_POINT);
-    }
-
-    if (millis() - gameOverTime >= GAME_OVER_DELAY) {
-      minigameActive = false;
-      gameOverTime = 0;
-    }
+  if (activeGame->isGameOver() && gameOverTime == 0) {
+    gameOverTime = millis();
+    Economy.earn(activeGame->getScore() * MONEY_PER_POINT);
   }
 }
 
 void MinigameManager::draw() {
-  if (minigameActive && activeGame) activeGame->draw();
+  if (activeGame) activeGame->draw();
 }
 
 void MinigameManager::primaryAction() {
-  if (minigameActive && activeGame) activeGame->primaryAction();
+  if (activeGame) activeGame->primaryAction();
 }
 
 bool MinigameManager::isGameOver() const {
   return activeGame && activeGame->isGameOver();
 }
 
-bool MinigameManager::isMinigameActive() const {
-  return minigameActive;
+bool MinigameManager::isReadyToExit() const {
+  return gameOverTime != 0 && (millis() - gameOverTime >= GAME_OVER_DELAY);
 }

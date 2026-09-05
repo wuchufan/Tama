@@ -13,6 +13,10 @@ public:
     if (current) current->update(tama, economy);
   }
 
+  void onButtonA() { if (current) current->onButtonA(); }
+  void onButtonB() { if (current) current->onButtonB(); }
+  void onButtonC() { if (current) current->onButtonC(); }
+
   bool isShowing(const Screen& screen) const {
     return current == &screen;
   }

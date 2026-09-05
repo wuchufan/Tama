@@ -9,4 +9,8 @@ public:
   virtual void enter() {} // called once when this screen becomes active
   virtual void exit() {}  // called once when leaving this screen
   virtual void update(const TamaState& tama, const EconomyManager& economy) = 0;
+
+  virtual void onButtonA() {}
+  virtual void onButtonB() {}
+  virtual void onButtonC() {}
 };

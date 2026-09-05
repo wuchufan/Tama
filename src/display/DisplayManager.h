@@ -20,6 +20,7 @@ public:
   void checkDisplayMenu(const TamaState& tama, MenuStack& menuStack);
   void playFeedAnimation();
   void toggleStatsScreen();
+  void refreshBackground(); // unconditionally repaints the wallpaper
   TFT_eSprite& getCanvas();
 
 private:
