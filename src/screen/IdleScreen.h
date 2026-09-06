@@ -1,12 +1,11 @@
 #pragma once
 #include "Screen.h"
 #include "ScreenManager.h"
-#include "../display/AnimationDisplay.h"
-#include "../display/BackgroundDisplay.h"
+#include "../display/DisplayManager.h"
 
 class IdleScreen : public Screen {
 public:
-  IdleScreen(AnimationDisplay& animator, BackgroundDisplay& background, ScreenManager& screens);
+  IdleScreen(DisplayManager& display, ScreenManager& screens);
 
   void setStatsScreen(Screen& screen);
   void setMenuScreen(Screen& screen);
@@ -17,8 +16,7 @@ public:
   void onButtonC() override;
 
 private:
-  AnimationDisplay& animator;
-  BackgroundDisplay& background;
+  DisplayManager& display;
   ScreenManager& screens;
   Screen* statsScreen = nullptr;
   Screen* menuScreen = nullptr;

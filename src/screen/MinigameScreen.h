@@ -7,6 +7,8 @@ class MinigameScreen : public Screen {
 public:
   MinigameScreen(MinigameManager& minigames, ScreenManager& screens, Screen& idleScreen);
 
+  void playFlappyBird(); // starts the game and shows this screen
+
   void update(const TamaState& tama, const EconomyManager& economy) override;
   void onButtonB() override;
   void onButtonC() override;

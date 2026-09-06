@@ -17,15 +17,34 @@ void DisplayManager::begin() {
   canvas.setSwapBytes(true);
 }
 
+void DisplayManager::updateAnimation() {
+  animator.update();
+}
+
 void DisplayManager::playFeedAnimation() {
   animator.playFeedAnimation();
+}
+
+void DisplayManager::refreshBackground() {
+  background.draw();
+}
+
+void DisplayManager::clearScreen() {
+  background.clearScreen();
+}
+
+void DisplayManager::drawStats(const TamaState& tama, const EconomyManager& economy) {
+  stats.draw(tama, economy);
+}
+
+void DisplayManager::checkDisplayMenu(MenuStack& menuStack) {
+  menuDisplay.checkMenu(menuStack);
+}
+
+void DisplayManager::invalidateMenu() {
+  menuDisplay.invalidate();
 }
 
 TFT_eSprite& DisplayManager::getCanvas() {
   return canvas;
 }
-
-AnimationDisplay& DisplayManager::getAnimator() { return animator; }
-BackgroundDisplay& DisplayManager::getBackground() { return background; }
-StatsDisplay& DisplayManager::getStats() { return stats; }
-MenuDisplay& DisplayManager::getMenuDisplay() { return menuDisplay; }

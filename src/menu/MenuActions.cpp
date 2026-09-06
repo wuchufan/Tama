@@ -2,7 +2,6 @@
 #include "../TamaState.h"
 #include "../CharacterManager.h"
 #include "../EconomyManager.h"
-#include "../minigames/MinigameManager.h"
 #include "../screen/MinigameScreen.h"
 #include "../screen/IdleScreen.h"
 #include "../display/DisplayManager.h"
@@ -13,7 +12,6 @@ extern TamaState Tama;             // defined in main.cpp
 extern CharacterManager Character; // defined in main.cpp
 extern DisplayManager Display;     // defined in main.cpp
 extern EconomyManager Economy;     // defined in main.cpp
-extern MinigameManager Minigames;  // defined in main.cpp
 extern ScreenManager AppScreens;      // defined in main.cpp
 extern MinigameScreen minigameScreen; // defined in main.cpp
 extern IdleScreen idleScreen;         // defined in main.cpp
@@ -183,9 +181,8 @@ void onShopMenuAction(int id) {
 void onMinigamesMenuAction(int id) {
   switch (id) {
     case 0:
-      Minigames.playFlappyBird();
       menuStack.closeAll();
-      AppScreens.switchTo(minigameScreen);
+      minigameScreen.playFlappyBird();
       break;
     case 1:
       menuStack.pop(); // Back

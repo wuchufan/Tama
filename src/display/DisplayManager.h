@@ -1,5 +1,8 @@
 #pragma once
 #include <TFT_eSPI.h>
+#include "../TamaState.h"
+#include "../EconomyManager.h"
+#include "../menu/MenuStack.h"
 #include "BackgroundDisplay.h"
 #include "AnimationDisplay.h"
 #include "StatsDisplay.h"
@@ -10,13 +13,16 @@ public:
   DisplayManager();
 
   void begin();
-  void playFeedAnimation();
-  TFT_eSprite& getCanvas();
 
-  AnimationDisplay& getAnimator();
-  BackgroundDisplay& getBackground();
-  StatsDisplay& getStats();
-  MenuDisplay& getMenuDisplay();
+  void updateAnimation();
+  void playFeedAnimation();
+  void refreshBackground();
+  void clearScreen();
+  void drawStats(const TamaState& tama, const EconomyManager& economy);
+  void checkDisplayMenu(MenuStack& menuStack);
+  void invalidateMenu();
+
+  TFT_eSprite& getCanvas();
 
 private:
   TFT_eSPI tft;

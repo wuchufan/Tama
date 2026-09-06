@@ -4,6 +4,11 @@ MinigameScreen::MinigameScreen(MinigameManager& minigamesRef, ScreenManager& scr
   : minigames(minigamesRef), screens(screensRef), idleScreen(idleScreenRef) {
 }
 
+void MinigameScreen::playFlappyBird() {
+  minigames.playFlappyBird();
+  screens.switchTo(*this);
+}
+
 void MinigameScreen::update(const TamaState& tama, const EconomyManager& economy) {
   minigames.update();
   minigames.draw();

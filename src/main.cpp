@@ -24,9 +24,9 @@ EconomyManager Economy;
 MinigameManager Minigames(Display.getCanvas());
 
 ScreenManager AppScreens;
-IdleScreen idleScreen(Display.getAnimator(), Display.getBackground(), AppScreens);
-MenuAppScreen menuAppScreen(Display.getMenuDisplay(), menuStack, AppScreens, idleScreen);
-StatsScreen statsScreen(Display.getStats(), Display.getBackground(), AppScreens, idleScreen, menuAppScreen);
+IdleScreen idleScreen(Display, AppScreens);
+MenuAppScreen menuAppScreen(Display, menuStack, AppScreens, idleScreen);
+StatsScreen statsScreen(Display, AppScreens, idleScreen, menuAppScreen);
 MinigameScreen minigameScreen(Minigames, AppScreens, idleScreen);
 
 void setup() {

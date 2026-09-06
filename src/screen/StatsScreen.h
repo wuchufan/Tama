@@ -1,12 +1,11 @@
 #pragma once
 #include "Screen.h"
 #include "ScreenManager.h"
-#include "../display/StatsDisplay.h"
-#include "../display/BackgroundDisplay.h"
+#include "../display/DisplayManager.h"
 
 class StatsScreen : public Screen {
 public:
-  StatsScreen(StatsDisplay& stats, BackgroundDisplay& background, ScreenManager& screens, Screen& idleScreen, Screen& menuScreen);
+  StatsScreen(DisplayManager& display, ScreenManager& screens, Screen& idleScreen, Screen& menuScreen);
 
   void enter() override;
   void update(const TamaState& tama, const EconomyManager& economy) override;
@@ -14,8 +13,7 @@ public:
   void onButtonC() override;
 
 private:
-  StatsDisplay& stats;
-  BackgroundDisplay& background;
+  DisplayManager& display;
   ScreenManager& screens;
   Screen& idleScreen;
   Screen& menuScreen;

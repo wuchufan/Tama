@@ -1,19 +1,19 @@
 #include "IdleScreen.h"
 #include "../menu/MenuActions.h" // for menuStack, mainMenu
 
-IdleScreen::IdleScreen(AnimationDisplay& animatorRef, BackgroundDisplay& backgroundRef, ScreenManager& screensRef)
-  : animator(animatorRef), background(backgroundRef), screens(screensRef) {
+IdleScreen::IdleScreen(DisplayManager& displayRef, ScreenManager& screensRef)
+  : display(displayRef), screens(screensRef) {
 }
 
 void IdleScreen::setStatsScreen(Screen& screen) { statsScreen = &screen; }
 void IdleScreen::setMenuScreen(Screen& screen) { menuScreen = &screen; }
 
 void IdleScreen::enter() {
-  background.draw();
+  display.refreshBackground();
 }
 
 void IdleScreen::update(const TamaState& tama, const EconomyManager& economy) {
-  animator.update();
+  display.updateAnimation();
 }
 
 void IdleScreen::onButtonB() {

@@ -1,15 +1,15 @@
 #include "MenuAppScreen.h"
 
-MenuAppScreen::MenuAppScreen(MenuDisplay& menuDisplayRef, MenuStack& menuStackRef, ScreenManager& screensRef, Screen& idleScreenRef)
-  : menuDisplay(menuDisplayRef), menuStack(menuStackRef), screens(screensRef), idleScreen(idleScreenRef) {
+MenuAppScreen::MenuAppScreen(DisplayManager& displayRef, MenuStack& menuStackRef, ScreenManager& screensRef, Screen& idleScreenRef)
+  : display(displayRef), menuStack(menuStackRef), screens(screensRef), idleScreen(idleScreenRef) {
 }
 
 void MenuAppScreen::enter() {
-  menuDisplay.invalidate(); // the menu may be reopening on the same screen and selection
+  display.invalidateMenu(); // the menu may be reopening on the same screen and selection
 }
 
 void MenuAppScreen::update(const TamaState& tama, const EconomyManager& economy) {
-  menuDisplay.checkMenu(menuStack);
+  display.checkDisplayMenu(menuStack);
 }
 
 void MenuAppScreen::onButtonA() { menuStack.current()->select(); }
