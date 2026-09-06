@@ -3,7 +3,7 @@
 MenuStack::MenuStack() : depth(0) {
 }
 
-void MenuStack::push(MenuScreen& screen) {
+void MenuStack::push(MenuWindow& screen) {
   if (depth >= MAX_DEPTH) return;
   screen.open();
   screens[depth] = &screen;
@@ -18,14 +18,10 @@ void MenuStack::closeAll() {
   depth = 0;
 }
 
-bool MenuStack::isOpen() const {
-  return depth > 0;
-}
-
 int MenuStack::getDepth() const {
   return depth;
 }
 
-MenuScreen* MenuStack::current() {
+MenuWindow* MenuStack::current() {
   return depth > 0 ? screens[depth - 1] : nullptr;
 }

@@ -1,6 +1,6 @@
 #include "MenuList.h"
 
-void MenuList::draw(MenuScreen& screen, TFT_eSprite& canvas) {
+void MenuList::draw(MenuWindow& screen, TFT_eSprite& canvas) {
   canvas.fillSprite(TFT_BLACK);
 
   int itemCount = screen.getItemCount();

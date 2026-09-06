@@ -1,38 +1,26 @@
 #include "MenuDisplay.h"
 
-MenuDisplay::MenuDisplay(TFT_eSPI& tftRef, BackgroundDisplay& backgroundRef, AnimationDisplay& animatorRef, StatsDisplay& statsRef, TFT_eSprite& canvasRef)
-  : tft(tftRef), background(backgroundRef), animator(animatorRef), stats(statsRef), canvas(canvasRef),
-    wasMenuOpen(false), lastDrawnScreen(nullptr), lastDrawnSelectedIndex(-1) {
+MenuDisplay::MenuDisplay(TFT_eSprite& canvasRef)
+  : canvas(canvasRef), lastDrawnScreen(nullptr), lastDrawnSelectedIndex(-1) {
 }
 
-void MenuDisplay::checkMenu(const TamaState& tama, MenuStack& menuStack) {
-  if (!menuStack.isOpen()) {
-    if (wasMenuOpen) {
-      background.draw();
-      animator.draw();
-      if (animator.isIdle()) {
-        // stats.draw(tama);
-      }
-      wasMenuOpen = false;
-      lastDrawnScreen = nullptr;
-      lastDrawnSelectedIndex = -1;
-    }
-    return;
-  }
+void MenuDisplay::invalidate() {
+  lastDrawnScreen = nullptr;
+  lastDrawnSelectedIndex = -1;
+}
 
-  MenuScreen* screen = menuStack.current();
-  bool justOpened = !wasMenuOpen;
+void MenuDisplay::checkMenu(MenuStack& menuStack) {
+  MenuWindow* screen = menuStack.current();
   bool screenChanged = (screen != lastDrawnScreen);
 
-  if (justOpened || screenChanged || screen->getSelectedIndex() != lastDrawnSelectedIndex) {
+  if (screenChanged || screen->getSelectedIndex() != lastDrawnSelectedIndex) {
     if (menuStack.getDepth() == 1) {
-      grid.draw(*screen, canvas);  // top level: icons only, 3x3
+      grid.draw(*screen, canvas);
     } else {
-      list.draw(*screen, canvas);  // any submenu: pill-list bubbles
+      list.draw(*screen, canvas);
     }
     canvas.pushSprite(0, 0);
     lastDrawnScreen = screen;
     lastDrawnSelectedIndex = screen->getSelectedIndex();
   }
-  wasMenuOpen = true;
 }

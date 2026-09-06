@@ -5,9 +5,11 @@
 #include "TamaEventsManager.h"
 #include "EconomyManager.h"
 #include "minigames/MinigameManager.h"
-#include "minigames/MinigameScreen.h"
-#include "NormalDisplayScreen.h"
-#include "display/ScreenManager.h"
+#include "screen/MinigameScreen.h"
+#include "screen/IdleScreen.h"
+#include "screen/StatsScreen.h"
+#include "screen/MenuAppScreen.h"
+#include "screen/ScreenManager.h"
 #include "menu/MenuActions.h"
 
 InputManager buttonA(1);
@@ -22,8 +24,10 @@ EconomyManager Economy;
 MinigameManager Minigames(Display.getCanvas());
 
 ScreenManager AppScreens;
-NormalDisplayScreen normalScreen(Display);
-MinigameScreen minigameScreen(Minigames, AppScreens, normalScreen);
+IdleScreen idleScreen(Display.getAnimator(), Display.getBackground(), AppScreens);
+MenuAppScreen menuAppScreen(Display.getMenuDisplay(), menuStack, AppScreens, idleScreen);
+StatsScreen statsScreen(Display.getStats(), Display.getBackground(), AppScreens, idleScreen, menuAppScreen);
+MinigameScreen minigameScreen(Minigames, AppScreens, idleScreen);
 
 void setup() {
   Serial.begin(115200);
@@ -32,11 +36,14 @@ void setup() {
   Display.begin();
   Character.begin();
 
+  idleScreen.setStatsScreen(statsScreen);
+  idleScreen.setMenuScreen(menuAppScreen);
+
   buttonA.init();
   buttonB.init();
   buttonC.init();
 
-  AppScreens.switchTo(normalScreen);
+  AppScreens.switchTo(idleScreen);
 }
 
 void loop() {

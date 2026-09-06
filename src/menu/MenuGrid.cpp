@@ -1,6 +1,6 @@
 #include "MenuGrid.h"
 
-void MenuGrid::draw(MenuScreen& screen, TFT_eSprite& canvas) {
+void MenuGrid::draw(MenuWindow& screen, TFT_eSprite& canvas) {
   canvas.fillSprite(TFT_BLACK);
 
   const int cols = 3;

@@ -10,7 +10,6 @@ const int AnimationDisplay::MOTION_CORRIDOR_X = LEFTMOST_X;
 AnimationDisplay::AnimationDisplay(TFT_eSPI& tft, BackgroundDisplay& background)
   : character(&tft),
     characterFrame(&tft),
-    tft(tft),
     background(background),
     activeFrames(idle_frames), activeFrameCount(IDLE_FRAME_COUNT), activeFrameDelay(FRAME_DELAY),
     activeLoops(true), animRepeatsRemaining(0),
@@ -78,10 +77,6 @@ void AnimationDisplay::playAnimation(const uint16_t* const frames[], int frameCo
 void AnimationDisplay::playFeedAnimation() {
   // playAnimation(smile_frames, SMILE_FRAME_COUNT, 80, 4);
   playAnimation(cry_frames, CRY_FRAME_COUNT, 150, 4);
-}
-
-bool AnimationDisplay::isIdle() const {
-  return activeLoops;
 }
 
 void AnimationDisplay::returnToIdle() {

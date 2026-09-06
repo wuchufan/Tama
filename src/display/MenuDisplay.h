@@ -1,29 +1,21 @@
 #pragma once
 #include <TFT_eSPI.h>
-#include "../TamaState.h"
-#include "BackgroundDisplay.h"
-#include "AnimationDisplay.h"
-#include "StatsDisplay.h"
 #include "../menu/MenuGrid.h"
 #include "../menu/MenuList.h"
 #include "../menu/MenuStack.h"
 
 class MenuDisplay {
 public:
-  MenuDisplay(TFT_eSPI& tft, BackgroundDisplay& background, AnimationDisplay& animator, StatsDisplay& stats, TFT_eSprite& canvas);
+  explicit MenuDisplay(TFT_eSprite& canvas);
 
-  void checkMenu(const TamaState& tama, MenuStack& menuStack);
+  void checkMenu(MenuStack& menuStack);
+  void invalidate(); // forces a redraw on the next checkMenu()
 
 private:
-  TFT_eSPI& tft;
-  BackgroundDisplay& background;
-  AnimationDisplay& animator;
-  StatsDisplay& stats;
   MenuGrid grid;
   MenuList list;
   TFT_eSprite& canvas;
 
-  bool wasMenuOpen;
-  MenuScreen* lastDrawnScreen;
+  MenuWindow* lastDrawnScreen;
   int lastDrawnSelectedIndex;
 };

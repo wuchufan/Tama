@@ -1,21 +1,20 @@
 #pragma once
-#include "MenuScreen.h"
+#include "MenuWindow.h"
 
 class MenuStack {
 public:
   MenuStack();
 
-  void push(MenuScreen& screen);
+  void push(MenuWindow& screen);
   void pop();
   void closeAll();
 
-  bool isOpen() const;
   int getDepth() const;
-  MenuScreen* current();
+  MenuWindow* current();
 
 private:
   static const int MAX_DEPTH = 4;
-  MenuScreen* screens[MAX_DEPTH];
+  MenuWindow* screens[MAX_DEPTH];
 
   int depth;
 };

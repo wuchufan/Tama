@@ -1,6 +1,5 @@
 #pragma once
 #include "MenuStack.h"
 
-extern MenuScreen mainMenu;
-extern MenuScreen debugMenu;
+extern MenuWindow mainMenu;
 extern MenuStack menuStack;

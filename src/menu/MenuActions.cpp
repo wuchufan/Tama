@@ -3,9 +3,10 @@
 #include "../CharacterManager.h"
 #include "../EconomyManager.h"
 #include "../minigames/MinigameManager.h"
-#include "../minigames/MinigameScreen.h"
+#include "../screen/MinigameScreen.h"
+#include "../screen/IdleScreen.h"
 #include "../display/DisplayManager.h"
-#include "../display/ScreenManager.h"
+#include "../screen/ScreenManager.h"
 #include <Arduino.h>
 
 extern TamaState Tama;             // defined in main.cpp
@@ -15,6 +16,7 @@ extern EconomyManager Economy;     // defined in main.cpp
 extern MinigameManager Minigames;  // defined in main.cpp
 extern ScreenManager AppScreens;      // defined in main.cpp
 extern MinigameScreen minigameScreen; // defined in main.cpp
+extern IdleScreen idleScreen;         // defined in main.cpp
 
 static void onMainMenuAction(int id);
 static void onActionsMenuAction(int id);
@@ -34,7 +36,7 @@ const MenuItem mainMenuItems[] = {
   { "placeholder",   onMainMenuAction, 8 },
 
 };
-MenuScreen mainMenu(mainMenuItems, 9);
+MenuWindow mainMenu(mainMenuItems, 9);
 
 const MenuItem actionsMenuItems[] = {
   { "Feed",  onActionsMenuAction, 0 },
@@ -43,7 +45,7 @@ const MenuItem actionsMenuItems[] = {
   { "Sleep", onActionsMenuAction, 3 },
   { "Back",  onActionsMenuAction, 4 },
 };
-MenuScreen actionsMenu(actionsMenuItems, 5);
+MenuWindow actionsMenu(actionsMenuItems, 5);
 
 const MenuItem debugMenuItems[] = {
   { "Social",    onDebugMenuAction, 0 },
@@ -54,7 +56,7 @@ const MenuItem debugMenuItems[] = {
   { "Stage",     onDebugMenuAction, 5 },
   { "Back",      onDebugMenuAction, 6 },
 };
-MenuScreen debugMenu(debugMenuItems, 7);
+MenuWindow debugMenu(debugMenuItems, 7);
 
 const MenuItem shopMenuItems[] = {
   { "PlayStation",    onShopMenuAction, 0 },
@@ -63,13 +65,13 @@ const MenuItem shopMenuItems[] = {
   { "Diet Coke",      onShopMenuAction, 3 },
   { "Back",           onShopMenuAction, 4 },
 };
-MenuScreen shopMenu(shopMenuItems, 5);
+MenuWindow shopMenu(shopMenuItems, 5);
 
 const MenuItem minigamesMenuItems[] = {
   { "Flappy Bird", onMinigamesMenuAction, 0 },
   { "Back",        onMinigamesMenuAction, 1 },
 };
-MenuScreen minigamesMenu(minigamesMenuItems, 2);
+MenuWindow minigamesMenu(minigamesMenuItems, 2);
 
 MenuStack menuStack;
 
@@ -114,18 +116,22 @@ void onActionsMenuAction(int id) {
       Tama.feed();
       Display.playFeedAnimation();
       menuStack.closeAll();
+      AppScreens.switchTo(idleScreen);
       break;
     case 1:
       Tama.clean();
       menuStack.closeAll();
+      AppScreens.switchTo(idleScreen);
       break;
     case 2:
       Tama.play();
       menuStack.closeAll();
+      AppScreens.switchTo(idleScreen);
       break;
     case 3:
       Tama.sleep();
       menuStack.closeAll();
+      AppScreens.switchTo(idleScreen);
       break;
     case 4:
       menuStack.pop(); // Back

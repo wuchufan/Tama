@@ -1,9 +1,9 @@
 #pragma once
 #include "MenuItem.h"
 
-class MenuScreen {
+class MenuWindow {
 public:
-  MenuScreen(const MenuItem* items, int itemCount);
+  MenuWindow(const MenuItem* items, int itemCount);
 
   void open();   // resets selection, called when this screen becomes active
   void next();

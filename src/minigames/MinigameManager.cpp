@@ -10,7 +10,7 @@ namespace {
 }
 
 MinigameManager::MinigameManager(TFT_eSprite& canvasRef)
-  : canvas(canvasRef), flappyBird(canvasRef), activeGame(nullptr), gameOverTime(0) {
+  : flappyBird(canvasRef), activeGame(nullptr), gameOverTime(0) {
 }
 
 void MinigameManager::playFlappyBird() {
@@ -36,10 +36,6 @@ void MinigameManager::draw() {
 
 void MinigameManager::primaryAction() {
   if (activeGame) activeGame->primaryAction();
-}
-
-bool MinigameManager::isGameOver() const {
-  return activeGame && activeGame->isGameOver();
 }
 
 bool MinigameManager::isReadyToExit() const {

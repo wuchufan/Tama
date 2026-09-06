@@ -12,12 +12,10 @@ public:
   void playAnimation(const uint16_t* const frames[], int frameCount, unsigned long frameDelay, int repeatCount = 1);
   void playFeedAnimation();
   void setIdleMovement();
-  bool isIdle() const;
 
 private:
   TFT_eSprite character;
   TFT_eSprite characterFrame; // holds the current frame's raw data so it becomes a real sprite, since pushToSprite() needs a sprite source, not a raw pointer
-  TFT_eSPI& tft;
   BackgroundDisplay& background;
   static const unsigned long FRAME_DELAY;
 

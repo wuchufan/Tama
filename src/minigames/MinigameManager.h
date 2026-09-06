@@ -13,11 +13,9 @@ public:
 
   void playFlappyBird();
 
-  bool isGameOver() const;
   bool isReadyToExit() const; // true once the game-over delay has elapsed
 
 private:
-  TFT_eSprite& canvas;
   FlappyBird flappyBird;
   Minigame* activeGame;
   unsigned long gameOverTime;

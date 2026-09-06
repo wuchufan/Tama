@@ -1,8 +1,8 @@
 #pragma once
 #include <TFT_eSPI.h>
-#include "MenuScreen.h"
+#include "MenuWindow.h"
 
 class MenuList {
 public:
-  void draw(MenuScreen& screen, TFT_eSprite& canvas);
+  void draw(MenuWindow& screen, TFT_eSprite& canvas);
 };

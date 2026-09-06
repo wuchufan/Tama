@@ -1,11 +1,11 @@
 #pragma once
-#include "../display/Screen.h"
-#include "../display/ScreenManager.h"
-#include "MinigameManager.h"
+#include "Screen.h"
+#include "ScreenManager.h"
+#include "../minigames/MinigameManager.h"
 
 class MinigameScreen : public Screen {
 public:
-  MinigameScreen(MinigameManager& minigames, ScreenManager& screens, Screen& normalScreen);
+  MinigameScreen(MinigameManager& minigames, ScreenManager& screens, Screen& idleScreen);
 
   void update(const TamaState& tama, const EconomyManager& economy) override;
   void onButtonB() override;
@@ -14,5 +14,5 @@ public:
 private:
   MinigameManager& minigames;
   ScreenManager& screens;
-  Screen& normalScreen;
+  Screen& idleScreen;
 };
