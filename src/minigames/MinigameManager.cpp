@@ -10,12 +10,18 @@ namespace {
 }
 
 MinigameManager::MinigameManager(TFT_eSprite& canvasRef)
-  : flappyBird(canvasRef), activeGame(nullptr), gameOverTime(0) {
+  : flappyBird(canvasRef), tamaFans(canvasRef), activeGame(nullptr), gameOverTime(0) {
 }
 
 void MinigameManager::playFlappyBird() {
   activeGame = &flappyBird;
   flappyBird.start();
+  gameOverTime = 0;
+}
+
+void MinigameManager::playTamaFans() {
+  activeGame = &tamaFans;
+  tamaFans.start();
   gameOverTime = 0;
 }
 
@@ -34,8 +40,12 @@ void MinigameManager::draw() {
   if (activeGame) activeGame->draw();
 }
 
-void MinigameManager::primaryAction() {
-  if (activeGame) activeGame->primaryAction();
+void MinigameManager::actionB() {
+  if (activeGame) activeGame->actionB();
+}
+
+void MinigameManager::actionA() {
+  if (activeGame) activeGame->actionA();
 }
 
 bool MinigameManager::isReadyToExit() const {

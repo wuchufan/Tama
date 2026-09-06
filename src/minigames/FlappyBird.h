@@ -10,7 +10,7 @@ public:
 
   void update() override;
   void draw() override;
-  void primaryAction() override; // flaps
+  void actionB() override; // flaps
 
   bool isGameOver() const override;
   int getScore() const override;

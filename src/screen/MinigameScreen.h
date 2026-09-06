@@ -8,8 +8,10 @@ public:
   MinigameScreen(MinigameManager& minigames, ScreenManager& screens, Screen& idleScreen);
 
   void playFlappyBird(); // starts the game and shows this screen
+  void playTamaFans();
 
   void update(const TamaState& tama, const EconomyManager& economy) override;
+  void onButtonA() override;
   void onButtonB() override;
   void onButtonC() override;
 

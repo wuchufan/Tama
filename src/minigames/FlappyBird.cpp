@@ -26,7 +26,7 @@ void FlappyBird::start() {
   resetPipes();
 }
 
-void FlappyBird::primaryAction() {
+void FlappyBird::actionB() {
   if (!gameOver) birdVelocity = FLAP_STRENGTH;
 }
 

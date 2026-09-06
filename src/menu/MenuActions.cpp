@@ -67,9 +67,10 @@ MenuWindow shopMenu(shopMenuItems, 5);
 
 const MenuItem minigamesMenuItems[] = {
   { "Flappy Bird", onMinigamesMenuAction, 0 },
-  { "Back",        onMinigamesMenuAction, 1 },
+  { "Tama Fans",   onMinigamesMenuAction, 1 },
+  { "Back",        onMinigamesMenuAction, 2 },
 };
-MenuWindow minigamesMenu(minigamesMenuItems, 2);
+MenuWindow minigamesMenu(minigamesMenuItems, 3);
 
 MenuStack menuStack;
 
@@ -185,6 +186,10 @@ void onMinigamesMenuAction(int id) {
       minigameScreen.playFlappyBird();
       break;
     case 1:
+      menuStack.closeAll();
+      minigameScreen.playTamaFans();
+      break;
+    case 2:
       menuStack.pop(); // Back
       break;
   }

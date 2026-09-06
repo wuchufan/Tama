@@ -2,6 +2,7 @@
 #include <TFT_eSPI.h>
 #include "Minigame.h"
 #include "FlappyBird.h"
+#include "TamaFans.h"
 
 class MinigameManager {
 public:
@@ -9,14 +10,17 @@ public:
 
   void update();
   void draw();
-  void primaryAction();
+  void actionB();
+  void actionA();
 
   void playFlappyBird();
+  void playTamaFans();
 
   bool isReadyToExit() const; // true once the game-over delay has elapsed
 
 private:
   FlappyBird flappyBird;
+  TamaFans tamaFans;
   Minigame* activeGame;
   unsigned long gameOverTime;
 };

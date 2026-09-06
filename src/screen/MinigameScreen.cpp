@@ -9,14 +9,23 @@ void MinigameScreen::playFlappyBird() {
   screens.switchTo(*this);
 }
 
+void MinigameScreen::playTamaFans() {
+  minigames.playTamaFans();
+  screens.switchTo(*this);
+}
+
 void MinigameScreen::update(const TamaState& tama, const EconomyManager& economy) {
   minigames.update();
   minigames.draw();
   if (minigames.isReadyToExit()) screens.switchTo(idleScreen);
 }
 
+void MinigameScreen::onButtonA() {
+  minigames.actionA();
+}
+
 void MinigameScreen::onButtonB() {
-  minigames.primaryAction();
+  minigames.actionB();
 }
 
 void MinigameScreen::onButtonC() {
